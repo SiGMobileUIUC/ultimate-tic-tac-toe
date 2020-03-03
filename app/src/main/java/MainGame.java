@@ -18,7 +18,7 @@ public class MainGame {
 	 * @param yClick The y location of the click in the subGame
 	 * @param c char of the player ("x" or "o")
 	 */
-	public void playSubGameTurn(int ySubGame, int xClick, int yClick, int xSubGame, char c) {
+	public void playSubGameTurn(int xSubGame, int ySubGame, int xClick, int yClick, char c) {
 		SubGame thisSubGame = subGames[xSubGame][ySubGame];
 		if (!thisSubGame.playTurn(xClick, yClick, c)) {
 			// Invalid move

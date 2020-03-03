@@ -6,14 +6,13 @@ public class SubGame {
     private char[][] arr;
     private char winner;
 
-
     public SubGame() {
         arr = new char[3][3];
         winner = ' ';
     }
 
     /**
-     * Checks win conditions and saves the winner
+     * Checks win conditions and saves the winner in state
      */
     private void checkWinner() {
         // Horizontal Checks
@@ -22,7 +21,6 @@ public class SubGame {
                 winner = arr[i][0];
                 return;
             }
-
         }
         // Vertical Checks
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -38,6 +36,7 @@ public class SubGame {
         }
         if (arr[0][2] == arr[1][1] && arr[0][2] == arr[2][0]  && (arr[0][2] == 'x' || arr[0][2] == 'o')) {
             winner = arr[0][2];
+            return;
         }
     }
 
@@ -62,7 +61,7 @@ public class SubGame {
      * @param c The char of the player ("x" or "o")
      * @return False if invalid move (already won or already taken). True otherwise.
      */
-    public boolean playTurn(int x, int y, char c) {
+    boolean playTurn(int x, int y, char c) {
         checkWinner();
         if (winner == 'x' || winner == 'o') {
             // Already a winner
