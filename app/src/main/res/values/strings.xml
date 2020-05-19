@@ -3,4 +3,13 @@
     <string name="ultimate_tic_tac_toe">Ultimate Tic Tac Toe</string>
     <string name="load_game">Load Game</string>
     <string name="new_game">New Game</string>
+    <string name="game_at_middle_square">Game at Middle Square</string>
+    <string name="sub_board">Sub Board</string>
+    <string name="_1_1">(1,1)</string>
+    <string name="_1_0">(1,0)</string>
+    <string name="_1_2">(1,2)</string>
+    <string name="_0_2">(0,2)</string>
+    <string name="_0_1">(0,1)</string>
+    <string name="_0_0">(0,0)</string>
+    <string name="game_board">game board</string>
 </resources>

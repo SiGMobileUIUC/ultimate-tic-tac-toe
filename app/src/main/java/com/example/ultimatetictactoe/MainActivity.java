@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void newGameOnClick(View view) {
         Intent intent = new Intent(MainActivity.this, SubGameActivity.class);
+//        intent.putExtra("currPlayer", 'x');
         startActivity(intent);
     }
 

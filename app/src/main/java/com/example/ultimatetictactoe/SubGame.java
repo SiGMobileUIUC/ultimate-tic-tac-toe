@@ -1,10 +1,13 @@
+package com.example.ultimatetictactoe;
+
 /**
  * A standard 3x3 Tic-Tac-Toe board with check winner functionality
  */
 public class SubGame {
-    private final int BOARD_SIZE = 3;
+    public static int BOARD_SIZE = 3;
     private char[][] arr;
     private char winner;
+    public char currentPlayer;
 
     public SubGame() {
         arr = new char[3][3];
