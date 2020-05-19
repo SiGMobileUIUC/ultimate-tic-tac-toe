@@ -16,8 +16,10 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
     private char currPlayer = 'x';
 //    private TextView gameStatus = (TextView)findViewById(R.id.gameStatus);
 
-    // Information for title
-    private TextView title;
+
+    private TextView title; // Text for screen title
+    private TextView gameStatus; // Text for errors and other pop up information.
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -25,6 +27,7 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_game);
         title = (TextView)findViewById(R.id.title);
+        gameStatus = (TextView)findViewById(R.id.gameStatus);
 
         // Set value of title to "Game at (x, y)
         int x = getIntent().getIntExtra("x", 0);
@@ -54,7 +57,7 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
 //            Intent intent = new Intent(SubGameActivity.this, MainActivity.class);
 //            startActivity(intent);
         } else {
-//            gameStatus.setText("Invalid Move");
+            gameStatus.setText("Invalid Move!");
         }
     }
 }

@@ -10,7 +10,7 @@ public class SubGame {
     public char currentPlayer;
 
     public SubGame() {
-        arr = new char[3][3];
+        arr = new char[BOARD_SIZE][BOARD_SIZE];
         winner = ' ';
     }
 
@@ -64,7 +64,7 @@ public class SubGame {
      * @param c The char of the player ("x" or "o")
      * @return False if invalid move (already won or already taken). True otherwise.
      */
-    boolean playTurn(int x, int y, char c) {
+    public boolean playTurn(int x, int y, char c) {
         checkWinner();
         if (winner == 'x' || winner == 'o') {
             // Already a winner
