@@ -68,4 +68,27 @@ public class MainGame {
         return true;
     }
 
+    public SubGame[][] getArr() {
+        return arr;
+    }
+
+    public void setArr(SubGame[][] arr) {
+        this.arr = arr;
+    }
+
+    public char getWinner() {
+        return winner;
+    }
+
+    public void setWinner(char winner) {
+        this.winner = winner;
+    }
+
+    public boolean isPlayerOne() {
+        return isPlayerOne;
+    }
+
+    public void setPlayerOne(boolean playerOne) {
+        isPlayerOne = playerOne;
+    }
 }
