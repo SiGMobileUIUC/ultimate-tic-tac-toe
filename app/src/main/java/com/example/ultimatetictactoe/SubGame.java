@@ -1,9 +1,13 @@
 package com.example.ultimatetictactoe;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * A standard 3x3 Tic-Tac-Toe board with check winner functionality
  */
-public class SubGame {
+public class SubGame implements Parcelable {
     public static int BOARD_SIZE = 3;
     private char[][] arr;
     private char winner;
@@ -77,4 +81,40 @@ public class SubGame {
         arr[x][y] = c;
         return true;
     }
+
+    // Parceling
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt((int) winner);
+        dest.writeInt((int) currentPlayer);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("board", arr);
+        dest.writeBundle(bundle);
+    }
+
+
+    protected SubGame(Parcel in) {
+        winner = (char) in.readInt();
+        currentPlayer = (char) in.readInt();
+        Bundle bundle = in.readBundle(getClass().getClassLoader());
+        assert bundle != null;
+        arr = (char [][]) bundle.getSerializable("board");
+    }
+
+    public static final Creator<SubGame> CREATOR = new Creator<SubGame>() {
+        @Override
+        public SubGame createFromParcel(Parcel in) {
+            return new SubGame(in);
+        }
+
+        @Override
+        public SubGame[] newArray(int size) {
+            return new SubGame[size];
+        }
+    };
 }
