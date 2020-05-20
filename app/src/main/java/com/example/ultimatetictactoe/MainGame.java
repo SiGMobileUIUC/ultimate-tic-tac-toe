@@ -1,8 +1,12 @@
 package com.example.ultimatetictactoe;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.ultimatetictactoe.SubGame;
 
-public class MainGame {
+public class MainGame implements Parcelable {
     public static int BOARD_SIZE = 3;
     private SubGame[][] arr;
     private char winner;
@@ -91,4 +95,38 @@ public class MainGame {
     public void setPlayerOne(boolean playerOne) {
         isPlayerOne = playerOne;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt((int) winner);
+        dest.writeByte((byte) (isPlayerOne ? 1 : 0));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("main board", arr);
+        dest.writeBundle(bundle);
+    }
+
+    protected MainGame(Parcel in) {
+        winner = (char) in.readInt();
+        isPlayerOne = in.readByte() != 0;
+        Bundle bundle = in.readBundle(getClass().getClassLoader());
+        assert bundle != null;
+        arr = (SubGame [][]) bundle.getSerializable("main board");
+    }
+
+    public static final Creator<MainGame> CREATOR = new Creator<MainGame>() {
+        @Override
+        public MainGame createFromParcel(Parcel in) {
+            return new MainGame(in);
+        }
+
+        @Override
+        public MainGame[] newArray(int size) {
+            return new MainGame[size];
+        }
+    };
 }
