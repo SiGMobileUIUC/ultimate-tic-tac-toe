@@ -12,4 +12,6 @@
     <string name="_0_1">(0,1)</string>
     <string name="_0_0">(0,0)</string>
     <string name="game_board">game board</string>
+    <string name="x_s_turn">X\'s Turn</string>
+    <string name="main_board">Main Board</string>
 </resources>
