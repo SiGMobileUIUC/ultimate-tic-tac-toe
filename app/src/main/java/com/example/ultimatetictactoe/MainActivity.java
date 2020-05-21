@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,12 +16,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newGameOnClick(View view) {
-        Intent intent = new Intent(MainActivity.this, SubGameActivity.class);
-//        intent.putExtra("currPlayer", 'x');
+        Log.i("click", "Starting New Game");
+        Intent intent = new Intent(MainActivity.this, MainGameActivity.class);
         startActivity(intent);
     }
 
     public void loadGameOnClick(View view) {
-
+        Log.i("click", "Loading Previous Game");
     }
 }

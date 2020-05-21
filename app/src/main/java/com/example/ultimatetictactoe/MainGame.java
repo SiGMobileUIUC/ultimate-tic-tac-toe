@@ -6,7 +6,9 @@ import android.os.Parcelable;
 
 import com.example.ultimatetictactoe.SubGame;
 
-public class MainGame implements Parcelable {
+import java.io.Serializable;
+
+public class MainGame implements Parcelable, Serializable {
     public static int BOARD_SIZE = 3;
     private SubGame[][] arr;
     private char winner;
@@ -15,6 +17,11 @@ public class MainGame implements Parcelable {
 
     public MainGame() {
         arr = new SubGame[BOARD_SIZE][BOARD_SIZE];
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                arr[i][j] = new SubGame();
+            }
+        }
         winner = ' ';
         isPlayerOne = true;
     }

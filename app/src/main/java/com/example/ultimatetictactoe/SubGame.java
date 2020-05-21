@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * A standard 3x3 Tic-Tac-Toe board with check winner functionality
  */
-public class SubGame implements Parcelable {
+public class SubGame implements Parcelable, Serializable {
     public static int BOARD_SIZE = 3;
     private char[][] arr;
     private char winner;
@@ -16,6 +18,11 @@ public class SubGame implements Parcelable {
     public SubGame() {
         arr = new char[BOARD_SIZE][BOARD_SIZE];
         winner = ' ';
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                arr[i][j] = ' ';
+            }
+        }
     }
 
     /**
