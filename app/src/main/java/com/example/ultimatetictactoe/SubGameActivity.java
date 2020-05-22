@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SubGameActivity extends AppCompatActivity implements View.OnClickListener {
     private SubGame subGame = new SubGame();
@@ -67,17 +68,24 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
         int y = Integer.parseInt(id.substring(4, 5));
         Log.d("click", "spot at: (" + x + ", " + y +")");
 
-        if(subGame.playTurn(x, y, currPlayer)) {
-            buttons[x][y].setText(String.valueOf(currPlayer));
-            subGame.getBoard()[x][y] = currPlayer;
-            mainGame.getArr()[boardx][boardy] = subGame;
-            mainGame.setPlayerOne(!mainGame.isPlayerOne());
+        if(mainGame.getWinner() == ' ') {
 
-            Intent intent = new Intent(SubGameActivity.this, MainGameActivity.class);
-            intent.putExtra("main game", (Parcelable) mainGame);
-            startActivity(intent);
+            if (subGame.playTurn(x, y, currPlayer)) {
+                buttons[x][y].setText(String.valueOf(currPlayer));
+                subGame.getBoard()[x][y] = currPlayer;
+                mainGame.getArr()[boardx][boardy] = subGame;
+                mainGame.setPlayerOne(!mainGame.isPlayerOne());
+
+                Intent intent = new Intent(SubGameActivity.this, MainGameActivity.class);
+                intent.putExtra("main game", (Parcelable) mainGame);
+                startActivity(intent);
+            } else {
+                gameStatus.setText("Invalid Move!");
+            }
         } else {
-            gameStatus.setText("Invalid Move!");
+            Toast.makeText(getApplicationContext(),
+                    String.valueOf(mainGame.getWinner()) + " has already won!",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
