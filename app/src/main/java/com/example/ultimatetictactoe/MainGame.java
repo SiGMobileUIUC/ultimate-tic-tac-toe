@@ -26,7 +26,7 @@ public class MainGame implements Parcelable, Serializable {
         isPlayerOne = true;
     }
 
-    private boolean checkWinner() {
+    public boolean checkWinner() {
         //Check if there is already a winner
         if (winner != ' ') {
             return true;

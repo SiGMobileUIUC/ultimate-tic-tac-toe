@@ -20,17 +20,13 @@ public class MainGameActivity extends AppCompatActivity {
     private MainGame game;
     private TextView title;
     private ImageButton[][] buttons = new ImageButton[MainGame.BOARD_SIZE][MainGame.BOARD_SIZE];
-    private char currPlayer = 'x';
+    private char currPlayer;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
-
-        // Update label values
-        title = (TextView)findViewById(R.id.title);
-        title.setText(currPlayer + "'s Turn");
 
         //Connect buttons array to Image buttons on screen
         for (int i = 0; i < SubGame.BOARD_SIZE; i++) {
@@ -45,6 +41,11 @@ public class MainGameActivity extends AppCompatActivity {
         game = getIntent().getExtras() == null ?
                 new MainGame() : (MainGame) getIntent().getParcelableExtra("main game");
 
+        // Update label values
+        title = (TextView)findViewById(R.id.title);
+        currPlayer = game.isPlayerOne() ? 'x' : 'o';
+        title.setText(currPlayer + "'s Turn");
+
         // Check if any of the boards are winners
         for (int i = 0; i < SubGame.BOARD_SIZE; i++) {
             for (int j = 0; j < SubGame.BOARD_SIZE; j++) {
@@ -52,17 +53,20 @@ public class MainGameActivity extends AppCompatActivity {
                 switch (subWinner) {
                     case 'x':
                         buttons[i][j].setImageResource(R.drawable.x);
-                        Toast toast=Toast.makeText(getApplicationContext(),"Game at " +i+j+" has been won by " + subWinner, Toast.LENGTH_LONG);
-                        toast.show();
                         break;
 
                     case 'o':
                         buttons[i][j].setImageResource(R.drawable.o);
-                        Toast toast1=Toast.makeText(getApplicationContext(),"Game at " +i+j+" has been won by " + subWinner, Toast.LENGTH_LONG);
-                        toast1.show();
                         break;
                 }
             }
+        }
+
+        // Game has winner
+        game.checkWinner();
+        if (game.getWinner() != ' ') {
+            Toast toast = Toast.makeText(getApplicationContext(), String.valueOf(game.getWinner()) + " has won the game!", Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 
