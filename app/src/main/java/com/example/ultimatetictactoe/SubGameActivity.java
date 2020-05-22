@@ -66,6 +66,7 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
         int x = Integer.parseInt(id.substring(3, 4));
         int y = Integer.parseInt(id.substring(4, 5));
         Log.d("click", "spot at: (" + x + ", " + y +")");
+
         if(subGame.playTurn(x, y, currPlayer)) {
             buttons[x][y].setText(String.valueOf(currPlayer));
             subGame.getBoard()[x][y] = currPlayer;

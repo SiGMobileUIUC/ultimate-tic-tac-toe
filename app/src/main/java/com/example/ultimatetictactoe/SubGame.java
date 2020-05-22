@@ -76,7 +76,6 @@ public class SubGame implements Parcelable, Serializable {
      * @return False if invalid move (already won or already taken). True otherwise.
      */
     public boolean playTurn(int x, int y, char c) {
-        checkWinner();
         if (winner == 'x' || winner == 'o') {
             // Already a winner
             return false;
@@ -86,6 +85,7 @@ public class SubGame implements Parcelable, Serializable {
             return false;
         }
         arr[x][y] = c;
+        checkWinner();
         return true;
     }
 
@@ -103,7 +103,6 @@ public class SubGame implements Parcelable, Serializable {
         bundle.putSerializable("board", arr);
         dest.writeBundle(bundle);
     }
-
 
     protected SubGame(Parcel in) {
         winner = (char) in.readInt();
