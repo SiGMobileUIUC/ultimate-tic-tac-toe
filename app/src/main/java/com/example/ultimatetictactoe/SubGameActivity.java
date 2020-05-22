@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,7 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
     private SubGame subGame = new SubGame();
     private MainGame mainGame = new MainGame();
     private int boardx, boardy;
-    private Button[][] buttons = new Button[SubGame.BOARD_SIZE][SubGame.BOARD_SIZE];
+    private ImageButton[][] buttons = new ImageButton[SubGame.BOARD_SIZE][SubGame.BOARD_SIZE];
     private char currPlayer = 'x';
 //    private TextView gameStatus = (TextView)findViewById(R.id.gameStatus);
 
@@ -54,7 +55,15 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
                 int resID = getResources().getIdentifier(ButtonID, "id", getPackageName());
                 buttons[i][j] = findViewById(resID);
                 buttons[i][j].setOnClickListener(this);
-                buttons[i][j].setText(String.valueOf(subGame.getBoard()[i][j]));
+                switch (subGame.getBoard()[i][j]) {
+                    case 'x':
+                        buttons[i][j].setImageResource(R.drawable.x);
+                        break;
+
+                    case 'o':
+                        buttons[i][j].setImageResource(R.drawable.o);
+                        break;
+                }
             }
         }
 
@@ -71,7 +80,14 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
         if(mainGame.getWinner() == ' ') {
 
             if (subGame.playTurn(x, y, currPlayer)) {
-                buttons[x][y].setText(String.valueOf(currPlayer));
+                switch (currPlayer) {
+                    case 'x':
+                        buttons[x][y].setImageResource(R.drawable.x);
+                        break;
+                    case 'o':
+                        buttons[x][y].setImageResource(R.drawable.o);
+                        break;
+                }
                 subGame.getBoard()[x][y] = currPlayer;
                 mainGame.getArr()[boardx][boardy] = subGame;
                 mainGame.setPlayerOne(!mainGame.isPlayerOne());
