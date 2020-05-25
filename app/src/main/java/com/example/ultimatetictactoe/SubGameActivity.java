@@ -46,7 +46,7 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
         assert mainGame != null;
         currPlayer = mainGame.isPlayerOne() ? 'x' : 'o';
 
-        title.setText("Game at (" + boardx +", " + boardy +")"); // Set Title
+        title.setText("Game at (" + boardx + ", " + boardy + ")"); // Set Title
 
         // Give buttons IDs and update values from subGame
         for (int i = 0; i < SubGame.BOARD_SIZE; i++) {
@@ -75,39 +75,34 @@ public class SubGameActivity extends AppCompatActivity implements View.OnClickLi
         String id = getResources().getResourceEntryName(v.getId());
         int x = Integer.parseInt(id.substring(3, 4));
         int y = Integer.parseInt(id.substring(4, 5));
-        Log.d("click", "spot at: (" + x + ", " + y +")");
+        Log.d("click", "spot at: (" + x + ", " + y + ")");
 
-        if(mainGame.getWinner() == ' ') {
-
-            if (subGame.playTurn(x, y, currPlayer)) {
-                switch (currPlayer) {
-                    case 'x':
-                        buttons[x][y].setImageResource(R.drawable.x);
-                        break;
-                    case 'o':
-                        buttons[x][y].setImageResource(R.drawable.o);
-                        break;
-                }
-                subGame.getBoard()[x][y] = currPlayer;
-                mainGame.getArr()[boardx][boardy] = subGame;
-                mainGame.setPlayerOne(!mainGame.isPlayerOne());
-
-                Intent intent = new Intent(SubGameActivity.this, MainGameActivity.class);
-                intent.putExtra("main game", (Parcelable) mainGame);
-                startActivity(intent);
-            } else {
-                gameStatus.setText("Invalid Move!");
+        if (mainGame.playTurn(x, y, boardx, boardy, currPlayer)) {
+            switch (currPlayer) {
+                case 'x':
+                    buttons[x][y].setImageResource(R.drawable.x);
+                    break;
+                case 'o':
+                    buttons[x][y].setImageResource(R.drawable.o);
+                    break;
             }
-        } else {
+
+            Intent intent = new Intent(SubGameActivity.this, MainGameActivity.class);
+            intent.putExtra("main game", (Parcelable) mainGame);
+            startActivity(intent);
+        } else if (mainGame.getWinner() != ' ') {
             Toast.makeText(getApplicationContext(),
                     String.valueOf(mainGame.getWinner()) + " has already won!",
                     Toast.LENGTH_LONG).show();
+        } else {
+            gameStatus.setText("Invalid Move!");
         }
+
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
-        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             // do something on back.
             Intent intent = new Intent(SubGameActivity.this, MainGameActivity.class);
             intent.putExtra("main game", (Parcelable) mainGame);

@@ -13,6 +13,7 @@ public class MainGame implements Parcelable, Serializable {
     private SubGame[][] arr;
     private char winner;
     public boolean isPlayerOne;
+    private int lastX = -1, lastY = -1;
 
 
     public MainGame() {
@@ -68,14 +69,23 @@ public class MainGame implements Parcelable, Serializable {
 
     boolean playTurn(int x, int y, int boardX, int boardY, char c) {
         // If winner already exits, return false
-        if (!checkWinner()) {
+        if (checkWinner()) {
             return false;
         }
 
-        SubGame board = arr[x][y];
-        if (!board.playTurn(boardX, boardY, c)) {
+        if (lastX > -1 && lastY > -1) {
+            if ((boardX != lastX || boardY != lastY) && arr[lastX][lastY].getWinner() == ' ') {
+                return false;
+            }
+        }
+
+        SubGame board = arr[boardX][boardY];
+        if (!board.playTurn(x, y, c)) {
             return false;
         }
+        lastX = x;
+        lastY = y;
+        isPlayerOne = !isPlayerOne;
         return true;
     }
 
@@ -111,6 +121,8 @@ public class MainGame implements Parcelable, Serializable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt((int) winner);
+        dest.writeInt(lastX);
+        dest.writeInt(lastY);
         dest.writeByte((byte) (isPlayerOne ? 1 : 0));
         Bundle bundle = new Bundle();
         bundle.putSerializable("main board", arr);
@@ -119,6 +131,8 @@ public class MainGame implements Parcelable, Serializable {
 
     protected MainGame(Parcel in) {
         winner = (char) in.readInt();
+        lastX = in.readInt();
+        lastY = in.readInt();
         isPlayerOne = in.readByte() != 0;
         Bundle bundle = in.readBundle(getClass().getClassLoader());
         assert bundle != null;
